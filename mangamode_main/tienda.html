@@ -131,7 +131,7 @@
         
         var activa = document.getElementById('seccion-' + idSeccion);
         if (idSeccion === 'carrito') {
-            activa.style.display = "block";
+            activa.style.display =  "block";
             renderizarCarrito();
         } else {
             activa.classList.add('seccion-activa');
@@ -151,8 +151,8 @@
         var existeEnCarrito = false;
         for (var j = 0; j < carrito.length; j++) {
             if (carrito[j].id === idElemento) {
-                carrito[j].cantidad++;
-                existeEnCarrito = true;
+             carrito[j].cantidad++;
+                existeEnCarrito =  true;
                 break;
             }
         }
@@ -197,12 +197,11 @@
         for (var i = 0; i < carrito.length; i++) {
             totalItems += carrito[i].cantidad;
             var spanCant = document.getElementById('cant-' + carrito[i].id);
-            if (spanCant) {
-                spanCant.innerHTML = carrito[i].cantidad;
+            if (spanCant) {spanCant.innerHTML = carrito[i].cantidad;
             }
         }
 
-        // Actualizar icono del carrito en el navbar
+        // --->>> Actualizar icono del carrito en el navbar
         document.getElementById("Amount").innerHTML = totalItems;
     };
 
@@ -215,7 +214,7 @@
         contenedorElementos.innerHTML = "";
         
         if (carrito.length === 0) {
-            mensajeVacio.style.display = "block";
+             mensajeVacio.style.display = "block";
             totalFinalElemento.innerHTML = "0";
             document.getElementById("formulario-datos").style.display = "none";
             return;
@@ -225,11 +224,11 @@
         var cuentaTotal = 0;
         
         for (var i = 0; i < carrito.length; i++) {
-            var subtotal = carrito[i].precio * carrito[i].cantidad;
+             var subtotal = carrito[i].precio * carrito[i].cantidad;
             cuentaTotal += subtotal;
             
             var divItem = document.createElement("div");
-            divItem.className = "item-carrito";
+             divItem.className = "item-carrito";
             divItem.innerHTML = "<strong>" + carrito[i].nombre + "</strong> (x" + carrito[i].cantidad + ") — $" + subtotal;
             contenedorElementos.appendChild(divItem);
         }
@@ -247,9 +246,9 @@
     };
 
     var procesarCompraEfectiva = function() {
-        var nombre = document.getElementById("input-nombre").value;
-        var email = document.getElementById("input-email").value;
-        var patronCorreo = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    var nombre = document.getElementById("input-nombre").value;
+    var email = document.getElementById("input-email").value;
+    var patronCorreo = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
         if (nombre === "") {
             alert("Por favor, ingresá un nombre para el registro.");
@@ -262,7 +261,7 @@
 
         alert("¡Excelente, " + nombre + "! Tu pedido fue procesado con éxito. Enviamos el detalle a: " + email);
 
-        // prara vaciar el carrito!!!
+        // <---prara vaciar el carrito!!!
         carrito = [];
         actualizarPantallaYContadores();
         renderizarCarrito();
@@ -274,7 +273,8 @@
         mostrarSeccion('remeras');
     };
 
-    // Iniciar la tienda apenas cargue el documento
+   // >---- Busqué window.onload porque necesitaba que toda la pag cargue antes de llamar a generarTiendas() 
+
     window.onload = function() {
         generarTiendas();
     };
