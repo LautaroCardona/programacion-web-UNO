@@ -86,8 +86,7 @@
         for (var i = 0; i < tiendaItemsData.length; i++) {
             var prod = tiendaItemsData[i];
 
-            var itemHTML = `
-                <div class="item" id="${prod.id}">
+            var itemHTML = ' <div class="item" id="${prod.id}">
                     <div class="image-container">
                         <img src="${prod.img}" alt="${prod.name}" width="100%">
                     </div>
@@ -103,8 +102,7 @@
                             </div>
                         </div>
                     </div>
-                </div>
-            `;
+                </div>';
 
             // Remeras (son los que van del item1 al item10)
             if (prod.id === 'item1' || prod.id === 'item2' || prod.id === 'item3' || prod.id === 'item4' || prod.id === 'item5' || prod.id === 'item6' || prod.id === 'item7' || prod.id === 'item8' || prod.id === 'item9' || prod.id === 'item10') {
