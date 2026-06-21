@@ -42,7 +42,7 @@
       <div id="elementos-carrito">
           </div>
       
-      <p id="lista-carrito-vacio" style="margin-top: 20px;">El carrito está vacío.</p>
+      <p id="lista-carrito-vacio" style="margin-top: 20px;">el carrito esta vacio.</p>
       
       <div style="margin-top: 20px; font-size: 1.2rem;">
           <strong>Total: $</strong><span id="total-carrito-final">0</span>
@@ -53,13 +53,13 @@
       <div class="formulario-compra" id="formulario-datos">
           <h3>Datos de Envío y Contacto</h3>
           <div id="formularioCompra">
-              <label for="input-nombre">Nombre Completo:</label>
+              <label for="input-nombre">Nombre:</label>
               <input type="text" id="input-nombre" placeholder="Juan Pérez">
               
-              <label for="input-email">Correo Electrónico:</label>
+              <label for="input-email">mail:</label>
               <input type="email" id="input-email" placeholder="ejemplo@correo.com">
 
-              <label for="input-direccion">Dirección de Envío:</label>
+              <label for="input-direccion">Dirección de Envio:</label>
               <input type="text" id="input-direccion" placeholder="Av. Siempreviva 742, Piso 1 Dpto B">
               
               <button class="compra" onclick="procesarCompraEfectiva()">Confirmar Pedido</button>
@@ -69,213 +69,203 @@
   <script src="src/Data.js"></script>
 
   <script>
-    // Carrito en memoria (array vacío)
-    var carrito = [];
+  // Carrito en memoria (array vacío)
+  var carrito = [];
 
     // 1. GENERAR LAS TARJETAS DINÁMICAMENTE
-    var generarTiendas = function() {
-        var remerasCont = document.getElementById("seccion-remeras");
+  var generarTiendas = function() {
+      var remerasCont = document.getElementById("seccion-remeras");
         var buzosCont = document.getElementById("seccion-buzos");
-        var accesoriosCont = document.getElementById("seccion-accesorios");
+      var accesoriosCont = document.getElementById("seccion-accesorios");
 
-        remerasCont.innerHTML = "";
-        buzosCont.innerHTML = "";
+      remerasCont.innerHTML = "";
+      buzosCont.innerHTML = "";
         accesoriosCont.innerHTML = "";
 
-        // Aqui puse el array que recorre el archivo con los items
-        for (var i = 0; i < tiendaItemsData.length; i++) {
-            var prod = tiendaItemsData[i];
+      // Aqui puse el array que recorre el archivo con los items
+      for (var i = 0; i < tiendaItemsData.length; i++) {
+          var prod = tiendaItemsData[i];
 
-            var itemHTML = ' <div class="item" id="${prod.id}">
-                    <div class="image-container">
+            var itemHTML = `
+                <div class="item" id="${prod.id}">
+                  <div class="image-container">
                         <img src="${prod.img}" alt="${prod.name}" width="100%">
-                    </div>
+                  </div>
                     <div class="detalles">
                         <h5>${prod.name}</h5>
-                        <p>Talles únicos. 100% algodón</p>
+                      <p>Talles únicos. 100% algodón</p>
                         <div class="precio_cantidad">
                             <span>$${prod.price}</span>
-                            <div class="button">
+                          <div class="button">
                                 <i class="bi bi-dash-lg" onclick="restarProducto('${prod.id}')"></i>
                                 <span id="cant-${prod.id}">0</span>
-                                <i class="bi bi-plus-lg" onclick="sumarProducto('${prod.id}')"></i>
+                              <i class="bi bi-plus-lg" onclick="sumarProducto('${prod.id}')"></i>
                             </div>
                         </div>
-                    </div>
-                </div>';
+                  </div>
+                </div>
+            `;
 
-            // Remeras (son los que van del item1 al item10)
+          // Remeras (son los que van del item1 al item10)
             if (prod.id === 'item1' || prod.id === 'item2' || prod.id === 'item3' || prod.id === 'item4' || prod.id === 'item5' || prod.id === 'item6' || prod.id === 'item7' || prod.id === 'item8' || prod.id === 'item9' || prod.id === 'item10') {
-                remerasCont.innerHTML += itemHTML;
+              remerasCont.innerHTML += itemHTML;
             } 
-            // Buzos (son los que van delitem21 al item30)
-            else if (prod.id === 'item21' || prod.id === 'item22' || prod.id === 'item23' || prod.id === 'item24' || prod.id === 'item25' || prod.id === 'item26' || prod.id === 'item27' || prod.id === 'item28' || prod.id === 'item29' || prod.id === 'item30') {
+          // Buzos (son los que van delitem21 al item30)
+          else if (prod.id === 'item21' || prod.id === 'item22' || prod.id === 'item23' || prod.id === 'item24' || prod.id === 'item25' || prod.id === 'item26' || prod.id === 'item27' || prod.id === 'item28' || prod.id === 'item29' || prod.id === 'item30') {
                 buzosCont.innerHTML += itemHTML;
             } 
-            // Accesorios (son los que van delitem11 al item20)
+          // Accesorios (son los que van delitem11 al item20)
             else {
-                accesoriosCont.innerHTML += itemHTML;
-            }
-        }
-    };
+              accesoriosCont.innerHTML += itemHTML;
+          }
+      }
+  };
 
     // controladores para la navegacion
-    var mostrarSeccion = function(idSeccion) {
-        var secciones = document.getElementsByClassName('seccion-tienda');
+  var mostrarSeccion = function(idSeccion) {
+      var secciones = document.getElementsByClassName('seccion-tienda');
         for (var i = 0; i < secciones.length; i++) {
-            secciones[i].classList.remove('seccion-activa');
+          secciones[i].classList.remove('seccion-activa');
             secciones[i].style.display = "none";
         }
         
-        var activa = document.getElementById('seccion-' + idSeccion);
+      var activa = document.getElementById('seccion-' + idSeccion);
         if (idSeccion === 'carrito') {
-            activa.style.display =  "block";
+          activa.style.display = "block";
             renderizarCarrito();
-        } else {
+      } else {
             activa.classList.add('seccion-activa');
         }
-    };
+  };
 
-    // carrito (sumar producto)
-    var sumarProducto = function(idElemento) {
-        var productoEncontrado = null;
-        for (var i = 0; i < tiendaItemsData.length; i++) {
-            if (tiendaItemsData[i].id === idElemento) {
-                productoEncontrado = tiendaItemsData[i];
-                break;
-            }
-        }
+  // carrito (sumar producto)
+    const sumarProducto = function(idElemento) {
+    const productoEncontrado = tiendaItemsData.find(prod => prod.id === idElemento);
+    const itemEnCarrito = carrito.find(item => item.id === idElemento);
 
-        var existeEnCarrito = false;
-        for (var j = 0; j < carrito.length; j++) {
-            if (carrito[j].id === idElemento) {
-             carrito[j].cantidad++;
-                existeEnCarrito =  true;
-                break;
-            }
-        }
+    // 3. Lógica de suma o agregado
+    if (itemEnCarrito) {
+        itemEnCarrito.cantidad++; 
+    } else {
+        carrito.push({            
+            id: idElemento,
+            nombre: productoEncontrado.name,
+            precio: productoEncontrado.price,
+            cantidad: 1
+        });
+    }
 
-        if (!existeEnCarrito) {
-            carrito.push({
-                id: idElemento,
-                nombre: productoEncontrado.name,
-                precio: productoEncontrado.price,
-                cantidad: 1
-            });
-        }
-
-        actualizarPantallaYContadores();
-    };
-
+    actualizarPantallaYContadores();
+};
     // carrito (restar producto)
-    var restarProducto = function(idElemento) {
-        for (var i = 0; i < carrito.length; i++) {
+  var restarProducto = function(idElemento) {
+      for (var i = 0; i < carrito.length; i++) {
             if (carrito[i].id === idElemento) {
-                carrito[i].cantidad--;
+              carrito[i].cantidad--;
                 if (carrito[i].cantidad <= 0) {
-                    carrito.splice(i, 1);
+                  carrito.splice(i, 1);
                 }
-                break;
+              break;
             }
         }
-        actualizarPantallaYContadores();
-    };
+      actualizarPantallaYContadores();
+  };
 
     //////////////////////////////////////////////////////////////////////////
-    var actualizarPantallaYContadores = function() {
-        var totalItems = 0;
+  var actualizarPantallaYContadores = function() {
+      var totalItems = 0;
         
-        // Resetear contadores de las tarjetas a 0
+      // Resetear contadores de las tarjetas a 0
         for (var k = 0; k < tiendaItemsData.length; k++) {
-            var el = document.getElementById('cant-' + tiendaItemsData[k].id);
+          var el = document.getElementById('cant-' + tiendaItemsData[k].id);
             if (el) el.innerHTML = "0";
         }
 
-        // Cargar cantidades actuales del carrito
+      // Cargar cantidades actuales del carrito
         for (var i = 0; i < carrito.length; i++) {
-            totalItems += carrito[i].cantidad;
+          totalItems += carrito[i].cantidad;
             var spanCant = document.getElementById('cant-' + carrito[i].id);
-            if (spanCant) {spanCant.innerHTML = carrito[i].cantidad;
+          if (spanCant) {
+                spanCant.innerHTML = carrito[i].cantidad;
             }
         }
 
-        // --->>> Actualizar icono del carrito en el navbar
+      // Actualizar icono del carrito en el navbar
         document.getElementById("Amount").innerHTML = totalItems;
     };
 
     ///////////////////////////////////////////////////////
-    var renderizarCarrito = function() {
-        var contenedorElementos = document.getElementById("elementos-carrito");
+  var renderizarCarrito = function() {
+      var contenedorElementos = document.getElementById("elementos-carrito");
         var mensajeVacio = document.getElementById("lista-carrito-vacio");
-        var totalFinalElemento = document.getElementById("total-carrito-final");
+      var totalFinalElemento = document.getElementById("total-carrito-final");
         
-        contenedorElementos.innerHTML = "";
+      contenedorElementos.innerHTML = "";
         
-        if (carrito.length === 0) {
-             mensajeVacio.style.display = "block";
-            totalFinalElemento.innerHTML = "0";
+      if (carrito.length === 0) {
+            mensajeVacio.style.display = "block";
+          totalFinalElemento.innerHTML = "0";
             document.getElementById("formulario-datos").style.display = "none";
-            return;
+          return;
         }
         
-        mensajeVacio.style.display = "none";
+      mensajeVacio.style.display = "none";
         var cuentaTotal = 0;
         
-        for (var i = 0; i < carrito.length; i++) {
-             var subtotal = carrito[i].precio * carrito[i].cantidad;
-            cuentaTotal += subtotal;
+      for (var i = 0; i < carrito.length; i++) {
+            var subtotal = carrito[i].precio * carrito[i].cantidad;
+          cuentaTotal += subtotal;
             
-            var divItem = document.createElement("div");
-             divItem.className = "item-carrito";
-            divItem.innerHTML = "<strong>" + carrito[i].nombre + "</strong> (x" + carrito[i].cantidad + ") — $" + subtotal;
+          var divItem = document.createElement("div");
+            divItem.className = "item-carrito";
+          divItem.innerHTML = "<strong>" + carrito[i].nombre + "</strong> (x" + carrito[i].cantidad + ") — $" + subtotal;
             contenedorElementos.appendChild(divItem);
         }
         
-        totalFinalElemento.innerHTML = cuentaTotal;
+      totalFinalElemento.innerHTML = cuentaTotal;
     };
 
     // 7. FORMULARIO Y CHECKOUT (me base en los eemplos subidos al campus)
-    var intentarMostrarFormulario = function() {
-        if (carrito.length === 0) {
+  var intentarMostrarFormulario = function() {
+      if (carrito.length === 0) {
             alert("No hay elementos cargados en tu carrito.");
-            return;
+          return;
         }
-        document.getElementById("formulario-datos").style.display = "block";
+      document.getElementById("formulario-datos").style.display = "block";
     };
 
     var procesarCompraEfectiva = function() {
-    var nombre = document.getElementById("input-nombre").value;
-    var email = document.getElementById("input-email").value;
-    var patronCorreo = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      var nombre = document.getElementById("input-nombre").value;
+        var email = document.getElementById("input-email").value;
+      var patronCorreo = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-        if (nombre === "") {
+      if (nombre === "") {
             alert("Por favor, ingresá un nombre para el registro.");
-            return;
+          return;
         }
-        if (!patronCorreo.test(email)) {
+      if (!patronCorreo.test(email)) {
             alert("Escribí una dirección de correo electrónico válida.");
-            return;
+          return;
         }
 
-        alert("¡Excelente, " + nombre + "! Tu pedido fue procesado con éxito. Enviamos el detalle a: " + email);
+      alert("¡Excelente, " + nombre + "! Tu pedido fue procesado con éxito. Enviamos el detalle a: " + email);
 
-        // <---prara vaciar el carrito!!!
-        carrito = [];
+        // prara vaciar el carrito!!!
+      carrito = [];
         actualizarPantallaYContadores();
-        renderizarCarrito();
+      renderizarCarrito();
         
-        document.getElementById("input-nombre").value = "";
+      document.getElementById("input-nombre").value = "";
         document.getElementById("input-email").value = "";
-        document.getElementById("formulario-datos").style.display = "none";
+      document.getElementById("formulario-datos").style.display = "none";
         
-        mostrarSeccion('remeras');
+      mostrarSeccion('remeras');
     };
 
-   // >---- Busqué window.onload porque necesitaba que toda la pag cargue antes de llamar a generarTiendas() 
-
-    window.onload = function() {
+    //  // >---- Busqué window.onload porque necesitaba que toda la pag cargue antes de llamar a generarTiendas() 
+  window.onload = function() {
         generarTiendas();
-    };
-  </script>
+  };
+</script>
 </body>
 </html>
