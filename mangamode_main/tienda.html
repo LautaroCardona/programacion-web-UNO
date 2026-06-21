@@ -69,10 +69,10 @@
   <script src="src/Data.js"></script>
 
   <script>
-  // Carrito en memoria (array vacío)
+  // Carrito en memoria (array vacio)
   var carrito = [];
 
-    // 1. GENERAR LAS TARJETAS DINÁMICAMENTE
+    // genera las targetas
   var generarTiendas = function() {
       var remerasCont = document.getElementById("seccion-remeras");
         var buzosCont = document.getElementById("seccion-buzos");
@@ -175,7 +175,7 @@
   var actualizarPantallaYContadores = function() {
       var totalItems = 0;
         
-      // Resetear contadores de las tarjetas a 0
+      // volver contadores de las tarjetas a 0
         for (var k = 0; k < tiendaItemsData.length; k++) {
           var el = document.getElementById('cant-' + tiendaItemsData[k].id);
             if (el) el.innerHTML = "0";
