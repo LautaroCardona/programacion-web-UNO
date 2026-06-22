@@ -1,0 +1,254 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: sans-serif;
+  background-image: url("imagenes/background.jpg");
+  background-size: cover; /* Cambiado a cover para que cubra toda la pantalla sin repetirse */
+  background-repeat: no-repeat;
+  background-attachment: fixed; /* Mantiene el fondo quieto al hacer scroll */
+}
+
+/** IIIIIIIIIIIIIIIIIIIIII  barra de navegador  IIIIIIIIIIIIII**/
+
+.navbar {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  background-color: #383572;
+  padding: 30px 60px;
+  margin-bottom: 30px;
+  align-items: center;
+}
+
+a {
+  color: #ffd60a;
+  text-decoration: none;
+}
+
+.cont {
+  position: relative;
+  padding: 5px;
+}
+
+.cart {
+  color: #000814;
+  background-color: rgb(255, 255, 255);
+  position: relative;
+  font-size: 30px;
+  padding: 5px;
+  border-radius: 4px;
+}
+
+.Amount {
+  position: absolute;
+  top: -15px;
+  right: -10px;
+  background-color: red;
+  color: white;
+  padding: 3px;
+  border-radius: 3px;
+  font-size: 16px;
+}
+
+/** IIIIIIIIIIIIIII los items de la tienda van aca IIIIIIIIIIIIIIIIII **/
+
+.tienda {
+  display: grid;
+  grid-template-columns: repeat(5, 225px);
+  gap: 50px;
+  justify-content: center;
+}
+
+.item {
+  border: 4px solid #ffd60a;
+  border-radius: 5px;
+  background-color: rgb(169, 158, 199);
+}
+
+.detalles {
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  gap: 15px;
+}
+
+.precio_cantidad {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.button {
+  display: flex;
+  flex-direction: row;
+  gap: 8px;
+  font-size: 16px;
+}
+
+.bi-dash-lg {
+  color: #9d0303;
+}
+
+.bi-plus-lg {
+  color: #036d2a;
+}
+
+i {
+  cursor: pointer;
+}
+
+/** IIIIIIIIIIIIIIIIII  zoom a la imagen CUANDO PASA MOUSE  IIIIIIIII **/
+
+.image-container {
+  position: relative;
+  overflow: hidden;
+}
+
+.image-container img {
+  transition: transform 0.3s ease;
+}
+
+.image-container:hover img {
+  transform: scale(1.08);
+}
+
+/** IIIIIIIIIIIIIIIIIII  css para carrito  IIIIIIIIIIIIIIIIIIIIIIIII **/
+
+.carrito-container {
+  padding: 20px;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+/* Fuerza a blanco los textos dentro del contenedor del carrito */
+.carrito-container, 
+.carrito-container h3, 
+.carrito-container p, 
+.carrito-container div,
+.carrito-container strong {
+  color: #ffffff !important;
+}
+
+.item-carrito {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #ffd60a !important; /* Línea amarilla que combina con tu web */
+  padding: 10px 0;
+}
+
+.compra {
+  color: #edc34d;
+  background-color: #34095e;
+  font-size: larger;
+  border: none;
+  padding: 9px;
+  border-radius: 10px;
+  margin-top: 15px;
+  cursor: pointer;
+}
+
+/* IIIIIIIIIIIIIIIIIII Formulario de Compra IIIIIIIIIIIIIIIIIII */
+
+.formulario-compra {
+  margin-top: 30px;
+  padding: 20px;
+  border: 1px dashed #ffd60a; /* Cambiado a amarillo para entonar con el diseño */
+  display: none;
+}
+
+#formularioCompra {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 9cm;
+  margin: 0 auto;
+  color: rgb(243, 243, 240);
+  font-size: larger;
+  border-radius: 4px;
+}
+
+#formularioCompra label,
+#formularioCompra input,
+#formularioCompra button {
+  margin-bottom: 10px;
+  width: 100%;
+  padding: 10px; 
+  box-sizing: border-box; 
+}
+
+#formularioCompra label {
+  color: #ffffff !important; /* Forzar etiquetas a blanco */
+}
+
+/** IIIIIIIIIIIIIIIIIII Control de Secciones (JS) IIIIIIIIIIIIIIIIIII **/
+
+.seccion-tienda {
+  display: none;
+}
+
+.seccion-activa {
+  display: grid !important; 
+}
+
+/** IIIIIIIIII Seccion Bienvenida IIIIIIIIII **/
+
+.contenedor-bienvenida {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 60vh;
+  padding: 20px;
+  text-align: center;
+}
+
+.mensaje-bienvenida {
+  color: #ffd60a; 
+  max-width: 800px;
+  font-family: sans-serif;
+}
+
+.mensaje-bienvenida h1 {
+  font-size: 2.5rem;
+  margin-bottom: 20px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+.mensaje-bienvenida p {
+  font-size: 1.5rem;
+  line-height: 1.6;
+}
+
+/* IIIIIIIIII Media Queries para celulares IIIIIIIIIIII */
+
+@media (max-width: 768px) {
+  .tienda {
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 10px;
+  }
+}
+
+@media (max-width: 767px) {
+  .navbar {
+    flex-direction: column;
+    align-items: center;
+    padding: 10px;
+  }
+
+  .navbar a {
+    margin-bottom: 10px;
+  }
+
+  .navbar h2 {
+    margin-bottom: 5px;
+  }
+
+  .navbar h4 {
+    margin-top: 0;
+  }
+}

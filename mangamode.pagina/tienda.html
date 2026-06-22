@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MANGA MODE</title>
+    <link rel="stylesheet" href="src/style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+</head>
+<body>
+
+  <div class="navbar">
+   <a href="index.html">
+      <h2><img src="src/imagenes/logo.png" width="60" alt="logo"> MANGA MODE</h2>
+      <h4>vestimenta para fans del manga y el anime</h4>
+    </a>
+    <a href="#" onclick="mostrarSeccion('remeras')">
+      <h4 class="cont">REMERAS</h4>
+    </a>
+    <a href="#" onclick="mostrarSeccion('buzos')">
+      <h4 class="cont">BUZOS</h4>
+    </a>
+    <a href="#" onclick="mostrarSeccion('accesorios')">
+      <h4 class="cont">ACCESORIOS</h4>
+    </a>
+    <a href="#" onclick="mostrarSeccion('carrito')">
+      <div class="cart">
+        <i class="bi bi-cart4"></i>
+        <cart id="Amount" class="Amount">0</cart>
+      </div>
+    </a>
+  </div>
+
+  
+
+  <div class="tienda seccion-tienda seccion-activa" id="seccion-remeras"></div>
+  <div class="tienda seccion-tienda" id="seccion-buzos"></div>
+  <div class="tienda seccion-tienda" id="seccion-accesorios"></div>
+
+  <div class="seccion-tienda carrito-container" id="seccion-carrito">
+      <h3>Tu Carrito de Compras</h3>
+      <div id="elementos-carrito">
+          </div>
+      
+      <p id="lista-carrito-vacio" style="margin-top: 20px;">el carrito esta vacio.</p>
+      
+      <div style="margin-top: 20px; font-size: 1.2rem;">
+          <strong>Total: $</strong><span id="total-carrito-final">0</span>
+      </div>
+      
+      <button class="compra" onclick="intentarMostrarFormulario()">Continuar Compra</button>
+      
+      <div class="formulario-compra" id="formulario-datos">
+          <h3>Datos de Envío y Contacto</h3>
+          <div id="formularioCompra">
+              <label for="input-nombre">Nombre:</label>
+              <input type="text" id="input-nombre" placeholder="Juan Pérez">
+              
+              <label for="input-email">mail:</label>
+              <input type="email" id="input-email" placeholder="ejemplo@correo.com">
+
+              <label for="input-direccion">Dirección de Envio:</label>
+              <input type="text" id="input-direccion" placeholder="Av. Siempreviva 742, Piso 1 Dpto B">
+              
+              <button class="compra" onclick="procesarCompraEfectiva()">Confirmar Pedido</button>
+          </div>
+      </div>
+
+  <script src="src/Data.js"></script>
+
+  <script>
+  // Carrito en memoria (array vacio)
+  var carrito = [];
+
+    // genera las targetas
+  var generarTiendas = function() {
+      var remerasCont = document.getElementById("seccion-remeras");
+        var buzosCont = document.getElementById("seccion-buzos");
+      var accesoriosCont = document.getElementById("seccion-accesorios");
+
+
+      // Aqui puse el array que recorre el archivo con los items
+      for (var i = 0; i < tiendaItemsData.length; i++) {
+          var prod = tiendaItemsData[i];
+
+            var itemHTML = `
+                <div class="item" id="${prod.id}">
+                  <div class="image-container">
+                        <img src="${prod.img}" alt="${prod.name}" width="100%">
+                  </div>
+                    <div class="detalles">
+                        <h5>${prod.name}</h5>
+                      <p>Talles únicos. 100% algodón</p>
+                        <div class="precio_cantidad">
+                            <span>$${prod.price}</span>
+                          <div class="button">
+                                <i class="bi bi-dash-lg" onclick="restarProducto('${prod.id}')"></i>
+                                <span id="cant-${prod.id}">0</span>
+                              <i class="bi bi-plus-lg" onclick="sumarProducto('${prod.id}')"></i>
+                            </div>
+                        </div>
+                  </div>
+                </div>
+            `;
+
+          // Remeras (son los que van del item1 al item10)
+            if (prod.id === 'item1' || prod.id === 'item2' || prod.id === 'item3' || prod.id === 'item4' || prod.id === 'item5' || prod.id === 'item6' || prod.id === 'item7' || prod.id === 'item8' || prod.id === 'item9' || prod.id === 'item10') {
+              remerasCont.innerHTML += itemHTML;
+            } 
+          // Buzos (son los que van delitem21 al item30)
+          else if (prod.id === 'item21' || prod.id === 'item22' || prod.id === 'item23' || prod.id === 'item24' || prod.id === 'item25' || prod.id === 'item26' || prod.id === 'item27' || prod.id === 'item28' || prod.id === 'item29' || prod.id === 'item30') {
+                buzosCont.innerHTML += itemHTML;
+            } 
+          // Accesorios (son los que van delitem11 al item20)
+            else {
+              accesoriosCont.innerHTML += itemHTML;
+          }
+      }
+  };
+
+    // controladores para la navegacion
+  var mostrarSeccion = function(idSeccion) {
+      var secciones = document.getElementsByClassName('seccion-tienda');
+        for (var i = 0; i < secciones.length; i++) {
+          secciones[i].classList.remove('seccion-activa');
+            secciones[i].style.display = "none";
+        }
+        
+      var activa = document.getElementById('seccion-' + idSeccion);
+        if (idSeccion === 'carrito') {
+          activa.style.display = "block";
+            renderizarCarrito();
+      } else {
+            activa.classList.add('seccion-activa');
+        }
+  };
+
+  // carrito (sumar producto)
+    const sumarProducto = function(idElemento) {
+    const productoEncontrado = tiendaItemsData.find(prod => prod.id === idElemento);
+    const itemEnCarrito = carrito.find(item => item.id === idElemento);
+
+    // 3. Lógica de suma o agregado
+    if (itemEnCarrito) {
+        itemEnCarrito.cantidad++; 
+    } else {
+        carrito.push({            
+            id: idElemento,
+            nombre: productoEncontrado.name,
+            precio: productoEncontrado.price,
+            cantidad: 1
+        });
+    }
+
+    actualizarPantallaYContadores();
+};
+    // carrito (restar producto)
+  var restarProducto = function(idElemento) {
+      for (var i = 0; i < carrito.length; i++) {
+            if (carrito[i].id === idElemento) {
+              carrito[i].cantidad--;
+                if (carrito[i].cantidad <= 0) {
+                  carrito.splice(i, 1);
+                }
+              break;
+            }
+        }
+      actualizarPantallaYContadores();
+  };
+
+    //////////////////////////////////////////////////////////////////////////
+  var actualizarPantallaYContadores = function() {
+      var totalItems = 0;
+
+      // crgar cantidades actuales del carito
+        for (var i = 0; i < carrito.length; i++) {
+          totalItems += carrito[i].cantidad;
+            var spanCant = document.getElementById('cant-' + carrito[i].id);
+          if (spanCant) {
+                spanCant.innerHTML = carrito[i].cantidad;
+            }
+        }
+
+      // actualizar icono del carrito en el navbar
+        document.getElementById("Amount").innerHTML = totalItems;
+    };
+
+    ///////////////////////////////////////////////////////
+  var renderizarCarrito = function() {
+      var contenedorElementos = document.getElementById("elementos-carrito");
+        var mensajeVacio = document.getElementById("lista-carrito-vacio");
+      var totalFinalElemento = document.getElementById("total-carrito-final");
+        
+      contenedorElementos.innerHTML = "";
+      
+      mensajeVacio.style.display = "none";
+        var cuentaTotal = 0;
+        
+      for (var i = 0; i < carrito.length; i++) {
+            var subtotal = carrito[i].precio * carrito[i].cantidad;
+          cuentaTotal += subtotal;
+            
+          var divItem = document.createElement("div");
+            divItem.className = "item-carrito";
+          divItem.innerHTML = "<strong>" + carrito[i].nombre + "</strong> (x" + carrito[i].cantidad + ") — $" + subtotal;
+            contenedorElementos.appendChild(divItem);
+        }
+        
+      totalFinalElemento.innerHTML = cuentaTotal;
+    };
+
+    // FORMULARIO Y CHECKOUT (me base en los eemplos subidos al campus)
+  var intentarMostrarFormulario = function() {
+      if (carrito.length === 0) {
+            alert("No hay elementos cargados en tu carrito.");
+          return;
+        }
+      document.getElementById("formulario-datos").style.display = "block";
+    };
+
+    var procesarCompraEfectiva = function() {
+      var nombre = document.getElementById("input-nombre").value;
+        var email = document.getElementById("input-email").value;
+      var patronCorreo = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+      if (!patronCorreo.test(email)) {
+            alert("Escribí una dirección de correo electrónico válida.");
+          return;
+        }
+
+      alert("¡Excelente, " + nombre + "! Tu pedido fue procesado con éxito. Enviamos el detalle a: " + email);
+      
+    };
+
+    //  // >---- Busqué window.onload porque necesitaba que toda la pag cargue antes de llamar a generarTiendas() 
+  window.onload = function() {
+        generarTiendas();
+  };
+</script>
+</body>
+</html>
