@@ -171,14 +171,8 @@
     //////////////////////////////////////////////////////////////////////////
   var actualizarPantallaYContadores = function() {
       var totalItems = 0;
-        
-      // volver contadores de las tarjetas a 0
-        for (var k = 0; k < tiendaItemsData.length; k++) {
-          var el = document.getElementById('cant-' + tiendaItemsData[k].id);
-            if (el) el.innerHTML = "0";
-        }
 
-      // Cargar cantidades actuales del carrito
+      // crgar cantidades actuales del carito
         for (var i = 0; i < carrito.length; i++) {
           totalItems += carrito[i].cantidad;
             var spanCant = document.getElementById('cant-' + carrito[i].id);
@@ -187,7 +181,7 @@
             }
         }
 
-      // Actualizar icono del carrito en el navbar
+      // actualizar icono del carrito en el navbar
         document.getElementById("Amount").innerHTML = totalItems;
     };
 
@@ -222,7 +216,7 @@
       totalFinalElemento.innerHTML = cuentaTotal;
     };
 
-    // 7. FORMULARIO Y CHECKOUT (me base en los eemplos subidos al campus)
+    // FORMULARIO Y CHECKOUT (me base en los eemplos subidos al campus)
   var intentarMostrarFormulario = function() {
       if (carrito.length === 0) {
             alert("No hay elementos cargados en tu carrito.");
