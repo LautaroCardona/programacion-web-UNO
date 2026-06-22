@@ -7,9 +7,9 @@
 body {
   font-family: sans-serif;
   background-image: url("imagenes/background.jpg");
-  background-size: cover; /* Cambiado a cover para que cubra toda la pantalla sin repetirse */
+  background-size: cover; 
   background-repeat: no-repeat;
-  background-attachment: fixed; /* Mantiene el fondo quieto al hacer scroll */
+  background-attachment: fixed; 
 }
 
 /** IIIIIIIIIIIIIIIIIIIIII  barra de navegador  IIIIIIIIIIIIII**/
@@ -124,7 +124,7 @@ i {
   margin: 0 auto;
 }
 
-/* Fuerza a blanco los textos dentro del contenedor del carrito */
+
 .carrito-container, 
 .carrito-container h3, 
 .carrito-container p, 
@@ -137,7 +137,7 @@ i {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-bottom: 1px solid #ffd60a !important; /* Línea amarilla que combina con tu web */
+  border-bottom: 1px solid #ffd60a !important; 
   padding: 10px 0;
 }
 
@@ -157,7 +157,7 @@ i {
 .formulario-compra {
   margin-top: 30px;
   padding: 20px;
-  border: 1px dashed #ffd60a; /* Cambiado a amarillo para entonar con el diseño */
+  border: 1px dashed #ffd60a; 
   display: none;
 }
 
@@ -182,7 +182,7 @@ i {
 }
 
 #formularioCompra label {
-  color: #ffffff !important; /* Forzar etiquetas a blanco */
+  color: #ffffff !important; 
 }
 
 /** IIIIIIIIIIIIIIIIIII Control de Secciones (JS) IIIIIIIIIIIIIIIIIII **/
